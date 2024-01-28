@@ -3,6 +3,7 @@ from sql_connection.sql import seb
 import numpy as np
 df_seb=(seb(password))
 
+# 4 parameters (Change, RSI,percentage_diff,10_change) to predict next_day change
 
 def verify(dataframes):
     if not dataframes:
@@ -31,7 +32,7 @@ def add_sma_10(df, column_name):
 
 def add_percentage_diff(df, price_column, sma_column):
     # differnece between sma and price
-    df['percentage_diff'] = (df[price_column].astype(float) / df[sma_column].astype(float) * 100) 
+    df['percentage_diff'] = (df[price_column].astype(float) / df[sma_column].astype(float) -1) 
     return df
 
 def add_10_day_change(df, change_column):
@@ -39,15 +40,18 @@ def add_10_day_change(df, change_column):
     df[change_column] = df[change_column].astype(float)
 
     # Calculate the 10-day sum of changes
-    df['10_change'] =  df[change_column].rolling(window=10, min_periods=1).apply(np.prod, raw=True)
+    df['temp']=df[change_column] /100 +1
+    df['10_change'] =  df['temp'].rolling(window=10, min_periods=1).apply(np.prod, raw=True)-1
+    df.drop(columns='temp',inplace=True)
     
     return df
 
 # Apply the function to your DataFrame
-df_seb = change_percentage(df_seb)
-df_seb = change_column(df_seb)
+
 df_seb = add_sma_10(df_seb, 'close')
 df_seb = add_percentage_diff(df_seb, 'close', 'SMA_10_close')
+df_seb = change_percentage(df_seb)
+df_seb = change_column(df_seb)
 df_seb = add_10_day_change(df_seb, 'Change')
 print(df_seb)
 correlation = df_seb['RSI'].corr(df_seb['Change'])
