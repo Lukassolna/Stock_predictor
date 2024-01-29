@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Greeting Page</title>
+    <title>Button Example</title>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
-    <h1>Greeting</h1>
-    <div>{{ greeting }}</div>
+    <button id="myButton">Click Me</button>
+    <p id="displayText">Button not clicked yet.</p>
 </body>
 </html>
