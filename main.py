@@ -1,10 +1,10 @@
 from sql_connection.pw import password
-from sql_connection.sql import seb
+from sql_connection.sql import sql_to_pandas
 import numpy as np
-df_seb=(seb(password))
-
+df_seb=(sql_to_pandas("seb",password))
+df_sbb=(sql_to_pandas("sbb",password))
 # 4 parameters (Change, RSI,percentage_diff,10_change) to predict next_day change
-
+dfs=[df_seb,df_sbb]
 def verify(dataframes):
     if not dataframes:
         raise ValueError("No DataFrames provided.")
@@ -13,6 +13,7 @@ def verify(dataframes):
     for i, df in enumerate(dataframes[1:], start=1):
         if not df['date'].equals(reference_dates):
             raise ValueError(f"The 'date' column in DataFrame {i} does not match the reference 'date' column.")
+    
 def change_percentage(df):
     df['Change'] = (df['Change'] / (df['close'] - df['Change'])) * 100
     return df
@@ -46,13 +47,21 @@ def add_10_day_change(df, change_column):
     
     return df
 
-# Apply the function to your DataFrame
+def create_columns(df):
+    df = add_sma_10(df, 'close')
+    df = add_percentage_diff(df, 'close', 'SMA_10_close')
+    df= change_percentage(df)
+    df = change_column(df)
+    df= add_10_day_change(df, 'Change')
+    return df
 
-df_seb = add_sma_10(df_seb, 'close')
-df_seb = add_percentage_diff(df_seb, 'close', 'SMA_10_close')
-df_seb = change_percentage(df_seb)
-df_seb = change_column(df_seb)
-df_seb = add_10_day_change(df_seb, 'Change')
-print(df_seb)
-correlation = df_seb['RSI'].corr(df_seb['Change'])
+
+
+
+df_seb=create_columns(df_seb)
+df_sbb=(create_columns(df_sbb))
+
+
+print(df_seb[['Change','RSI']])
+correlation = df_sbb['next_day_change'].corr(df_sbb['RSI'])
 print(correlation)
