@@ -1,0 +1,6 @@
+get the data
+remove kr from close
+
+save to csv 
+go into vsc and replace comma with dot
+then import to sql
