@@ -53,10 +53,17 @@ function fetchDaily() {
     fetch(`/daily`)
     .then(response => response.json())
     .then(data => {
+        console.log(data)
         const date = data.length > 0 ? new Date(data[0].date).toLocaleDateString() : 'No date available';
         const changes = data.map(stock => ({ 
             name: stock.name, 
-            Change: (stock.Change * 100).toFixed(2) + '%' // Format as percentage with 2 decimal places
+            RSI: stock.RSI,
+            Change: (stock.Change * 100).toFixed(2) + '%' ,// Format as percentage with 2 decimal places
+         
+            '10_change': stock['10_change'],
+           
+            percentage_diff: stock.percentage_diff
+
         }));
 
         // Sort the changes array in descending order based on the 'Change' property
