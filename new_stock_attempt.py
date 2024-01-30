@@ -4,6 +4,9 @@ import pandas as pd
 import os
 import numpy as np
 from global_var import omx
+import pickle
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 def fetch_stock_data(ticker):
     end_date = datetime.today()
@@ -84,8 +87,12 @@ def create_columns(df):
 
     return df
 
-
-def fetch_all():
+def fetch_all(use_pickle=True, pickle_path='stock_data.pkl', max_age_hours=24):
+    if use_pickle and os.path.exists(pickle_path):
+        file_age_hours = (datetime.now() - datetime.fromtimestamp(os.path.getmtime(pickle_path))).total_seconds() / 3600
+        if file_age_hours < max_age_hours:
+            with open(pickle_path, 'rb') as file:
+                return pickle.load(file)
     dfs=[]
     directory = 'new_csv_files' 
     for stock in omx:
@@ -97,6 +104,9 @@ def fetch_all():
 
         except Exception as e:
             print(f"Error fetching data for {stock}: {e}")
+    with open(pickle_path, 'wb') as file:
+        pickle.dump(dfs, file)
+
     return dfs
 dfs=fetch_all()
 

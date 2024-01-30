@@ -49,6 +49,34 @@ function updateChart(data) {
         }
     });
 }
+function fetchDaily() {
+    fetch(`/daily`)
+    .then(response => response.json())
+    .then(data => {
+        const date = data.length > 0 ? new Date(data[0].date).toLocaleDateString() : 'No date available';
+        const changes = data.map(stock => ({ 
+            name: stock.name, 
+            Change: (stock.Change * 100).toFixed(2) + '%' // Format as percentage with 2 decimal places
+        }));
 
+        // Sort the changes array based on the 'Change' property
+        changes.sort((a, b) => parseFloat(b.Change) - parseFloat(a.Change));
+
+        // Get the container element in your HTML
+        const stockInfoContainer = document.getElementById('stockInfo');
+
+        // Create an HTML string to display the information
+        const html = `
+            <h2>Date: ${date}</h2>
+            <ul>
+                ${changes.map(stock => `<li>${stock.name}: ${stock.Change}</li>`).join('')}
+            </ul>
+        `;
+
+        // Set the HTML content of the container element
+        stockInfoContainer.innerHTML = html;
+    });
+}
 // Initial chart load for default period
 fetchData('10mo');
+fetchDaily();

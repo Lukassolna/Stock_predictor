@@ -3,8 +3,6 @@ from sql_connection.sql import sql_to_pandas
 import numpy as np
 from new_stock_attempt import fetch_all
 
-
-
 df_seb=(sql_to_pandas("seb",password))
 df_sbb=(sql_to_pandas("sbb",password))
 df_hexa=sql_to_pandas("hexa",password)
