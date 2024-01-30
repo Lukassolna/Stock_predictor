@@ -1,6 +1,19 @@
-fetch('/data')
-.then(response => response.json())
-.then(data => {
+let chart; // Declare chart variable outside to be accessible in updateChart function
+
+document.getElementById('1mo').addEventListener('click', () => fetchData('1mo'));
+document.getElementById('3mo').addEventListener('click', () => fetchData('3mo'));
+document.getElementById('6mo').addEventListener('click', () => fetchData('6mo'));
+document.getElementById('1y').addEventListener('click', () => fetchData('1y'));
+
+function fetchData(period) {
+    fetch(`/data?period=${period}`)
+    .then(response => response.json())
+    .then(data => {
+        updateChart(data);
+    });
+}
+
+function updateChart(data) {
     const dates = data.map(item => {
         const date = new Date(item.Date);
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -9,27 +22,33 @@ fetch('/data')
 
     const ctx = document.getElementById('stockChart').getContext('2d');
 
-    const chart = new Chart(ctx, {
+    if (chart) {
+        chart.destroy(); // Destroy the old chart instance if it exists
+    }
+
+    chart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: dates,
             datasets: [{
                 label: 'OMX 30 Index',
-                backgroundColor: 'rgba(0, 128, 0, 0.2)', // Light green background
-                borderColor: 'rgba(0, 128, 0, 1)', // Green line
+                backgroundColor: 'rgba(0, 128, 0, 0.2)',
+                borderColor: 'rgba(0, 128, 0, 1)',
                 data: values,
-                fill: false, // If you want no fill under the line
+                fill: false,
             }]
         },
         options: {
             scales: {
                 y: {
-                    beginAtZero: false, // Set to false to not start at zero
-                    min: 2000, // Minimum value for y-axis
-                    max: 3000, // Maximum value for y-axis
-                    // You can also set the stepSize if you want specific increments
+                    beginAtZero: false,
+                    min: 2000,
+                    max: 3000,
                 }
             }
         }
     });
-});
+}
+
+// Initial chart load for default period
+fetchData('10mo');

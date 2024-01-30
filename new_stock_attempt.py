@@ -1,14 +1,36 @@
-from sql_connection.pw import password
-from sql_connection.sql import sql_to_pandas
+import yfinance as yf
+from datetime import datetime, timedelta
+import pandas as pd
+import os
 import numpy as np
-from new_stock_attempt import fetch_all
+from global_var import omx
 
+def fetch_stock_data(ticker):
+    end_date = datetime.today()
+    start_date = end_date - timedelta(days=100*365)
+    data = yf.download(ticker, start=start_date, end=end_date)
+    if data.empty:
+        raise Exception(f"No data available for ticker {ticker}")
+    data = data[['Close']].reset_index()
+    data['Change'] = data['Close'] / data['Close'].shift(1)
+    data['Change'] = data['Change'].fillna(1)
+    data['Change'] = data['Change']-1
+    data['Delta'] = data['Close'].diff()
+    data['Gain'] = data['Delta'].apply(lambda x: x if x > 0 else 0)
+    data['Loss'] = data['Delta'].apply(lambda x: -x if x < 0 else 0)
 
+    window_length = 14
+    data['Avg_Gain'] = data['Gain'].rolling(window=window_length, min_periods=window_length).mean()
+    data['Avg_Loss'] = data['Loss'].rolling(window=window_length, min_periods=window_length).mean()
+    
+    data['RS'] = data['Avg_Gain'] / data['Avg_Loss']
+    
+    data['RSI'] = 100 - (100 / (1 + data['RS']))
+    # clean the data
+    data.drop(columns='Delta',inplace=True)
+    data.columns = ['date', 'close', 'Change', 'Up', 'Down', 'Av up', 'Av down', 'Relative', 'RSI']
+    return data
 
-df_seb=(sql_to_pandas("seb",password))
-df_sbb=(sql_to_pandas("sbb",password))
-df_hexa=sql_to_pandas("hexa",password)
-# 4 parameters (Change, RSI,percentage_diff,10_change) to predict next_day change
 
 def verify(dataframes):
     if not dataframes:
@@ -58,13 +80,24 @@ def create_columns(df):
     df= change_percentage(df)
     df = change_column(df)
     df= add_10_day_change(df, 'Change')
+    df.fillna(0, inplace=True)
+
     return df
 
 
+def fetch_all():
+    dfs=[]
+    directory = 'new_csv_files' 
+    for stock in omx:
+        try:
+            current = fetch_stock_data(stock)
+            current=create_columns(current)
+            dfs.append(current)
+            current.to_csv(f'{directory}/{stock}.csv', index=False)
+
+        except Exception as e:
+            print(f"Error fetching data for {stock}: {e}")
+    return dfs
+dfs=fetch_all()
 
 
-df_seb=create_columns(df_seb)
-df_sbb=(create_columns(df_sbb))
-df_hexa=create_columns(df_hexa)
-
-dfs= [df_seb,df_sbb,df_hexa]
