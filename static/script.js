@@ -59,7 +59,7 @@ function fetchDaily() {
             Change: (stock.Change * 100).toFixed(2) + '%' // Format as percentage with 2 decimal places
         }));
 
-        // Sort the changes array based on the 'Change' property
+        // Sort the changes array in descending order based on the 'Change' property
         changes.sort((a, b) => parseFloat(b.Change) - parseFloat(a.Change));
 
         // Get the container element in your HTML
@@ -67,16 +67,29 @@ function fetchDaily() {
 
         // Create an HTML string to display the information
         const html = `
-            <h2>Date: ${date}</h2>
-            <ul>
-                ${changes.map(stock => `<li>${stock.name}: ${stock.Change}</li>`).join('')}
-            </ul>
+            <div class="header">
+                <h1>Overview of OMX30 Stocks</h1>
+                <h2>Date: ${date}</h2>
+            </div>
+            <table>
+                <tr>
+                    <th>Stock</th>
+                    <th>Daily Change</th>
+                </tr>
+                ${changes.map(stock => `
+                    <tr>
+                        <td>${stock.name}</td>
+                        <td>${stock.Change}</td>
+                    </tr>
+                `).join('')}
+            </table>
         `;
 
         // Set the HTML content of the container element
         stockInfoContainer.innerHTML = html;
     });
 }
+
 // Initial chart load for default period
 fetchData('10mo');
 fetchDaily();
