@@ -107,3 +107,4 @@ for threshold in thresholds:
         print(f"Lowest Value: {results['lowest_value']}, Switches: {results['switch_count_lowest']}, Not Switches: {results['not_switch_count_lowest']}")
         print("---")
     print("======")
+    
