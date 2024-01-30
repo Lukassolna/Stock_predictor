@@ -19,9 +19,7 @@ function updateChart(data) {
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     });
     const values = data.map(item => item.Close);
-
     const ctx = document.getElementById('stockChart').getContext('2d');
-
     if (chart) {
         chart.destroy(); // Destroy the old chart instance if it exists
     }
@@ -50,29 +48,35 @@ function updateChart(data) {
     });
 }
 function fetchDaily() {
+    const coeff = [0.0005693932143501474, -0.04166693171601551, -0.0017189670006476443, -0.0029120077788588952];
     fetch(`/daily`)
     .then(response => response.json())
     .then(data => {
-        console.log(data)
+        console.log(data);
         const date = data.length > 0 ? new Date(data[0].date).toLocaleDateString() : 'No date available';
-        const changes = data.map(stock => ({ 
-            name: stock.name, 
-            RSI: stock.RSI,
-            Change: (stock.Change * 100).toFixed(2) + '%' ,// Format as percentage with 2 decimal places
-         
-            '10_change': stock['10_change'],
-           
-            percentage_diff: stock.percentage_diff
+        const changes = data.map(stock => {
+            const predictedValue = 
+                coeff[0] * stock.RSI +
+                coeff[1] * stock.Change +
+                coeff[2] * stock['10_change'] +
+                coeff[3] * stock.percentage_diff;
+            return {
+                name: stock.name, 
+                RSI: stock.RSI,
+                Change: (stock.Change * 100).toFixed(2) + '%',
+                '10_change': stock['10_change'],
+                percentage_diff: stock.percentage_diff,
+                predictedValue: (predictedValue*100).toFixed(2)+ '%'
+            };
+        });
 
-        }));
+        // Sort the changes array
+        changes.sort((a, b) => parseFloat(b.Change.replace('%', '')) - parseFloat(a.Change.replace('%', '')));
 
-        // Sort the changes array in descending order based on the 'Change' property
-        changes.sort((a, b) => parseFloat(b.Change) - parseFloat(a.Change));
-
-        // Get the container element in your HTML
+        // Get the container element
         const stockInfoContainer = document.getElementById('stockInfo');
 
-        // Create an HTML string to display the information
+        // Create HTML content
         const html = `
             <div class="header">
                 <h1>Overview of OMX30 Stocks</h1>
@@ -82,17 +86,19 @@ function fetchDaily() {
                 <tr>
                     <th>Stock</th>
                     <th>Daily Change</th>
+                    <th>Predicted Value</th>
                 </tr>
                 ${changes.map(stock => `
                     <tr>
                         <td>${stock.name}</td>
                         <td>${stock.Change}</td>
+                        <td>${stock.predictedValue}</td>
                     </tr>
                 `).join('')}
             </table>
         `;
 
-        // Set the HTML content of the container element
+        // Set the HTML content
         stockInfoContainer.innerHTML = html;
     });
 }
