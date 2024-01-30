@@ -12,7 +12,6 @@ def data():
     omx_hist = fetch_omx_hist(period=inputPeriod)
     return jsonify(omx_hist.to_dict(orient='records'))
 
-
 @app.route('/daily')
 def daily():
     dataframes = fetch_all()  # Fetch the array of dataframes
@@ -26,6 +25,14 @@ def daily():
 def index():
     greeting = "Hello"
     return render_template('index.html', greeting=greeting)
+
+@app.route('/stock/<stock_name>')
+def stock_detail(stock_name):
+    # You can fetch additional data about the stock here if needed
+    return render_template('stock_detail.html', stock_name=stock_name)
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

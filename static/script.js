@@ -47,6 +47,16 @@ function updateChart(data) {
         }
     });
 }
+function clickedStock(stockName, RSI, change, tenChange, percentageDiff) {
+    
+    //window.location.href = `/stock/${stockName}`;
+    console.log("Stock clicked:", stockName);
+    console.log("RSI:", RSI);
+    console.log("Daily Change:", change);
+    console.log("10-Day Change:", tenChange);
+    console.log("Percentage Difference from SMA:", percentageDiff)
+    console.log("Stock clicked:", stockName);
+}
 function fetchDaily() {
     const coeff = [0.0005693932143501474, -0.04166693171601551, -0.0017189670006476443, -0.0029120077788588952];
     fetch(`/daily`)
@@ -71,7 +81,12 @@ function fetchDaily() {
         });
 
         // Sort the changes array
-        changes.sort((a, b) => parseFloat(b.Change.replace('%', '')) - parseFloat(a.Change.replace('%', '')));
+        changes.sort((a, b) => parseFloat(b.predictedValue.replace('%', '')) - parseFloat(a.predictedValue.replace('%', '')));
+
+        // Assign ranks
+        changes.forEach((stock, index) => {
+            stock.rank = index + 1;
+        });
 
         // Get the container element
         const stockInfoContainer = document.getElementById('stockInfo');
@@ -84,15 +99,15 @@ function fetchDaily() {
             </div>
             <table>
                 <tr>
+                    <th>AI rank</th>
                     <th>Stock</th>
                     <th>Daily Change</th>
-                    <th>Predicted Value</th>
                 </tr>
                 ${changes.map(stock => `
-                    <tr>
+                <tr onClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})">
+                        <td>${stock.rank}</td>
                         <td>${stock.name}</td>
                         <td>${stock.Change}</td>
-                        <td>${stock.predictedValue}</td>
                     </tr>
                 `).join('')}
             </table>
@@ -102,6 +117,8 @@ function fetchDaily() {
         stockInfoContainer.innerHTML = html;
     });
 }
+
+// Rest of your code remains the same
 
 // Initial chart load for default period
 fetchData('10mo');
