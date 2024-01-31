@@ -87,7 +87,7 @@ def create_columns(df):
 
     return df
 
-def fetch_all(use_pickle=True, pickle_path='stock_data.pkl', max_age_hours=24):
+def fetch_all(use_pickle=True, pickle_path='stock_data.pkl', max_age_hours=1):
     if use_pickle and os.path.exists(pickle_path):
         file_age_hours = (datetime.now() - datetime.fromtimestamp(os.path.getmtime(pickle_path))).total_seconds() / 3600
         if file_age_hours < max_age_hours:
