@@ -13,7 +13,9 @@ JavaScript, Flask, HTML, and CSS is used to create a simple lightweight web inte
 
 ## Technologies Used
 - **Python**: For AI model development and backend logic. Some of the main libraries used are
-sklearn, pandas,numpy, 
+sklearn, pandas,numpy,
+Each stock is evaluted based on a model developed with a recurrant neural network and additionally modified based on a rating assigned
+from linear regression using attributes such as Slow moving average, RSI and short term performance
 - **Yahoo finance API**: To  retrieve stock data.
 - **SQL**: To store stock data in a secure way to be used for training our model.
 - **JavaScript**: To add interactivity to the web pages.
