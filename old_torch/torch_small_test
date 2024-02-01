@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
-from torch_neural_network import RNNModel  # Assuming this is your custom module
+from old_torch_RNNmodel import RNNModel  # Assuming this is your custom module
 
 # Function to create sequences and targets
 def create_sequences(data, sequence_length):

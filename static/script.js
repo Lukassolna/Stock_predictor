@@ -49,7 +49,7 @@ function updateChart(data) {
 }
 function clickedStock(stockName, RSI, change, tenChange, percentageDiff) {
     
-    //window.location.href = `/stock/${stockName}`;
+    window.location.href = `/stock/${stockName}`;
     console.log("Stock clicked:", stockName);
     console.log("RSI:", RSI);
     console.log("Daily Change:", change);

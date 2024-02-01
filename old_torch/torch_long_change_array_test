@@ -1,10 +1,12 @@
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
-from torch_neural_network import RNNModel  # Assuming this is your custom module
+from old_torch_RNNmodel import RNNModel  # Assuming this is your custom module
 from new_stock_attempt import dfs
+from global_var import omx
 combined_data = []
-df=dfs[22]
+index = omx.index('HM-B.ST')
+df=dfs[index]
 combined_data.extend(zip(df['Change'].tolist(), df['RSI'].tolist(),df['10_change'].tolist()))
 
 def create_sequences(data, sequence_length):
