@@ -16,12 +16,23 @@ train_dfs = dfs[1:10]  # Use the first 28 stocks for training
 test_dfs = dfs[1:10]   # Use the last 2 stocks for testing
 
 train_dataset = ChangeDataset(train_dfs)
-train_dataloader = DataLoader(train_dataset, batch_size=1, shuffle=True, collate_fn=collate_fn)
+train_dataloader = DataLoader(train_dataset, batch_size=10, shuffle=True, collate_fn=collate_fn)
+# Print first few samples from ChangeDataset
+print("Sample data from ChangeDataset:")
+for i in range(min(5, len(train_dataset))):  # Print first 5 samples
+    sample = train_dataset[i]
+    print(f"Sample {i}: {sample}")
+# Print first few batches from DataLoader
+print("Sample batches from DataLoader:")
+for i, batch in enumerate(train_dataloader):
+    if i >= 2:  # Print only first 2 batches
+        break
+    print(f"Batch {i}: {batch}")
 
 test_dataset = ChangeDataset(test_dfs)
-test_dataloader = DataLoader(test_dataset, batch_size=1, shuffle=False, collate_fn=collate_fn)
+test_dataloader = DataLoader(test_dataset, batch_size=10, shuffle=False, collate_fn=collate_fn)
 
-model = RNNModel(input_size=1, hidden_size=50, num_layers=2, output_size=1)
+model = RNNModel(input_size=1, hidden_size=100, num_layers=2, output_size=1)
 criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
@@ -55,7 +66,7 @@ actuals = []
 predictions = []
 
 with torch.no_grad():
-    for batch in test_dataloader:
+    for i,batch in enumerate(test_dataloader):
         inputs = batch[:, :-1]  # All but the last element as input
         targets = batch[:, -1].unsqueeze(-1)  # Only the last element as target
         inputs = inputs.unsqueeze(-1)  # Add an extra dimension
@@ -63,6 +74,11 @@ with torch.no_grad():
         outputs = model(inputs)
         loss = criterion(outputs, targets)
         test_losses.append(loss.item())
+        if i < 3:  # print first three samples
+            print(f'Inputs: {inputs}')
+            print(f'Predicted: {outputs}')
+            print(f'Actual: {targets}')
+            print('---')
 
         # Store actual and predicted values for plotting
         actuals.extend(targets.squeeze(-1).tolist())
