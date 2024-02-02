@@ -22,7 +22,11 @@ button {
     padding-left: 20px;
     font-size: 30px; 
     }
-
+    .ai-description {
+        width: 45%; /* Adjust the width as needed */
+        padding-top:30px;
+        margin-right: 0; /* Remove any right margin */
+    }
 
 
 

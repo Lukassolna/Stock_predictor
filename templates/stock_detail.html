@@ -13,7 +13,7 @@
     
    
     <p class="AItext">AI predicted Change for the Next Day: <span class="predicted-change" id="predictedChange">{{ predicted_change }}%</span></p>
-
+    
     <div style="width:600px;">
         <canvas id="stockChart"></canvas>
     </div>
@@ -23,6 +23,13 @@
         <button id="3mo">3 Months</button>
         <button id="6mo">6 Months</button>
         <button id="1y">1 Year</button>
+    </div>
+
+    <div class="ai-description">
+        The underlying AI performs time series forecasting using an RNN (Recurrent Neural Network) model, 
+        taking into account historical stock price changes and technical indicators such as RSI and SMA .
+         It allows for the prediction of the next day's stock price change for a specific stock through machine
+        learning on historical data and reuses our pre-trained model to make predictions on future performance.
     </div>
     <script src="/static/stock_specific.js"></script>
 </body>
