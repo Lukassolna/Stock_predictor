@@ -81,7 +81,7 @@ function fetchDaily() {
         });
 
         // Sort the changes array
-        changes.sort((a, b) => parseFloat(b.predictedValue.replace('%', '')) - parseFloat(a.predictedValue.replace('%', '')));
+        changes.sort((a, b) => parseFloat(b.Change.replace('%', '')) - parseFloat(a.Change.replace('%', '')));
 
         // Assign ranks
         changes.forEach((stock, index) => {
@@ -99,16 +99,17 @@ function fetchDaily() {
             </div>
             <table>
                 <tr>
-                    <th>AI rank</th>
+                    <th>AI ranking</th>
                     <th>Stock</th>
                     <th>Daily Change</th>
                 </tr>
                 ${changes.map(stock => `
-                <tr onClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})">
+                    <tro nClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})" >
                         <td>${stock.rank}</td>
                         <td>${stock.name}</td>
                         <td>${stock.Change}</td>
-                    </tr>
+                        <td><button onClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})">Click for AI prediction</button></td>
+                        </tr>
                 `).join('')}
             </table>
         `;
