@@ -7,18 +7,21 @@ The information provided in this application is for educational and informationa
 and should not be construed as financial advice.
 ## Description
 This project is an AI-powered stock prediction web application. It uses machine learning models to forecast stock prices,
- employing Python for data analysis and machine learning, SQL for data storage.
+employing Python for data analysis and machine learning,
+SQL for data storage.
 JavaScript, Flask, HTML, and CSS is used to create a simple lightweight web interface.
-
 
 ## Technologies Used
 - **Python**: For AI model development and backend logic. Some of the main libraries used are
-sklearn, pandas,numpy,
-Each stock is evaluted based on a model developed with a recurrant neural network and additionally modified based on a rating assigned
-from linear regression using attributes such as Slow moving average, RSI and short term performance
+- **psycopg2** For interaction with our PostgreSQL database
+ **pandas,numpy** Standard data processing and data manipulation
+ **, sklearn, ,Pytorch** Machine learning and optimization
 - **Yahoo finance API**: To  retrieve stock data.
-- **SQL**: To store stock data in a secure way to be used for training our model.
+- **SQL**: To store stock data in a secure way with fast acces to be used for training our model ( Mostly just to familirize with sql and transactions)
 - **JavaScript**: To add interactivity to the web pages.
 - **Flask**: A lightweight web framework for Python.
 - **HTML & CSS**: For structuring and styling the web pages.
 
+  
+ Each stock is evaluted based on a model developed with a recurrant neural network whih utilizes past performance to predict next day performance.
+ 
