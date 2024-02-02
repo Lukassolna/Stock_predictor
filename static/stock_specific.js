@@ -4,8 +4,23 @@ document.getElementById('1mo').addEventListener('click', () => fetchData(stockNa
 document.getElementById('3mo').addEventListener('click', () => fetchData(stockName, '3mo'));
 document.getElementById('6mo').addEventListener('click', () => fetchData(stockName, '6mo'));
 document.getElementById('1y').addEventListener('click', () => fetchData(stockName, '1y'));
-
 document.getElementById('homebutton').addEventListener('click', () => window.location.href='/');
+document.addEventListener('DOMContentLoaded', function() {
+    const predictedChangeElement = document.getElementById('predictedChange');
+    const predictedChangeValue = parseFloat(predictedChangeElement.textContent);
+    
+    // duplicated %
+    let predictedChangeText = predictedChangeElement.textContent.replace('%', '');
+
+    if (predictedChangeValue > 0) {
+        predictedChangeElement.className = 'positive';
+        predictedChangeElement.innerHTML = `&#9650; ${predictedChangeText}`; // Up arrow for positive change
+    } else if (predictedChangeValue < 0) {
+        predictedChangeElement.className = 'negative';
+        predictedChangeElement.innerHTML = `&#9660; ${predictedChangeText}`; // Down arrow for negative change
+    }
+   
+});
 
 function fetchData(stockName, period) {
    
