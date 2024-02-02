@@ -2,13 +2,27 @@
 <html>
 <head>
     <title>Stock Details</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js for the stock chart -->
 </head>
 <body>
     <h1>Stock Details: {{ stock_name }}</h1>
+    <input type="hidden" id="stockName" value="{{ stock_name }}"> 
+    
     <!-- Display the predicted change -->
     <p>Predicted Change for the Next Day: {{ predicted_change }}</p>
     <!-- You can add more HTML here to display additional details about the stock -->
+
+    <!-- Stock chart and time range buttons added below -->
+    <div style="width:600px;">
+        <canvas id="stockChart"></canvas>
+    </div>
     
-</body>
+    <button id="1mo">1 Month</button>
+    <button id="3mo">3 Months</button>
+    <button id="6mo">6 Months</button>
+    <button id="1y">1 Year</button>
+
+    
+    <script src="/static/stock_specific.js"></script> <!-- Link to your JavaScript file for handling the stock chart and button interactions -->
 </body>
 </html>

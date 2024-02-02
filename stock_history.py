@@ -15,5 +15,3 @@ def fetch_stock_hist(stock,period="10mo"):
     hist = hist[['Date', 'Close']]
     return hist
 
-# Now you can call fetch_omx_hist with a specific period when needed
-hist = fetch_stock_hist("10mo")

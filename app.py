@@ -5,6 +5,7 @@ import datetime
 from new_stock_attempt import fetch_all
 from global_var import omx
 from torch_specific_stock import predict_change_for_specific_stock
+from stock_history import fetch_stock_hist
 app = Flask(__name__)
 
 @app.route('/data')
@@ -12,6 +13,15 @@ def data():
     inputPeriod = request.args.get('period', default='10mo')  # Get 'period' from query params or default to '10mo'
     omx_hist = fetch_omx_hist(period=inputPeriod)
     return jsonify(omx_hist.to_dict(orient='records'))
+
+@app.route('/specificdata/<stock_name>')  # Modified route to include stock_name
+def specific_data(stock_name):
+    print(stock_name)
+    inputPeriod = request.args.get('period', default='10mo')  # Get 'period' from query params
+    hist = fetch_stock_hist(stock=stock_name, period=inputPeriod)  # Use stock_name from URL
+    return jsonify(hist.to_dict(orient='records'))
+
+
 
 @app.route('/daily')
 def daily():
