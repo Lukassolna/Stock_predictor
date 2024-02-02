@@ -104,7 +104,7 @@ function fetchDaily() {
                     <th>Daily Change</th>
                 </tr>
                 ${changes.map(stock => `
-                    <tro nClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})" >
+                    <tr  onClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})" >
                         <td>${stock.rank}</td>
                         <td>${stock.name}</td>
                         <td>${stock.Change}</td>

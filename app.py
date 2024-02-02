@@ -14,11 +14,11 @@ def data():
     omx_hist = fetch_omx_hist(period=inputPeriod)
     return jsonify(omx_hist.to_dict(orient='records'))
 
-@app.route('/specificdata/<stock_name>')  # Modified route to include stock_name
+@app.route('/specificdata/<stock_name>')  # Modified route to include stock name
 def specific_data(stock_name):
     print(stock_name)
-    inputPeriod = request.args.get('period', default='10mo')  # Get 'period' from query params
-    hist = fetch_stock_hist(stock=stock_name, period=inputPeriod)  # Use stock_name from URL
+    inputPeriod = request.args.get('period', default='10mo')  # Get period from query
+    hist = fetch_stock_hist(stock=stock_name, period=inputPeriod)  
     return jsonify(hist.to_dict(orient='records'))
 
 
