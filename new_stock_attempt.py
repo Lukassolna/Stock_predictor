@@ -15,9 +15,9 @@ def fetch_stock_data(ticker):
     if data.empty:
         raise Exception(f"No data available for ticker {ticker}")
     data = data[['Close']].reset_index()
-    data['Change'] = data['Close'] / data['Close'].shift(1)
+    data['Change'] = data['Close'] - data['Close'].shift(1)
     data['Change'] = data['Change'].fillna(1)
-    data['Change'] = data['Change']-1
+    
     data['Delta'] = data['Close'].diff()
     data['Gain'] = data['Delta'].apply(lambda x: x if x > 0 else 0)
     data['Loss'] = data['Delta'].apply(lambda x: -x if x < 0 else 0)
@@ -44,9 +44,7 @@ def verify(dataframes):
         if not df['date'].equals(reference_dates):
             raise ValueError(f"The 'date' column in DataFrame {i} does not match the reference 'date' column.")
     
-def change_percentage(df):
-    df['Change'] = (df['Change'] / (df['close'] - df['Change'])) * 100
-    return df
+
 
 def change_column(df):
     # Create 'next_day_change' column by shifting 'Change' up by one
@@ -69,7 +67,6 @@ def add_percentage_diff(df, price_column, sma_column):
 def add_10_day_change(df, change_column):
     # Ensure the 'Change' column is numeric
     df[change_column] = df[change_column].astype(float)
-
     # Calculate the 10-day sum of changes
     df['temp']=df[change_column] /100 +1
     df['10_change'] = (df['temp'].rolling(window=10, min_periods=1).apply(np.prod, raw=True) - 1) * 100
@@ -77,14 +74,19 @@ def add_10_day_change(df, change_column):
     
     return df
 
+    
+def change_as_percentage(df):
+    df['Change'] = (df['close'] / (df['close'] - df['Change'])) 
+    df['Change']=df['Change']-1 
+    return df
 def create_columns(df):
     df = add_sma_10(df, 'close')
     df = add_percentage_diff(df, 'close', 'SMA_10_close')
-    df= change_percentage(df)
+    df=change_as_percentage(df)
     df = change_column(df)
+
     df= add_10_day_change(df, 'Change')
     df.fillna(0, inplace=True)
-
     return df
 
 def fetch_all(use_pickle=True, pickle_path='stock_data.pkl', max_age_hours=1):
@@ -109,5 +111,5 @@ def fetch_all(use_pickle=True, pickle_path='stock_data.pkl', max_age_hours=1):
 
     return dfs
 dfs=fetch_all()
-
+print()
 

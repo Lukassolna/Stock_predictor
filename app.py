@@ -4,6 +4,7 @@ import yfinance as yf
 import datetime
 from new_stock_attempt import fetch_all
 from global_var import omx
+from torch_specific_stock import predict_change_for_specific_stock
 app = Flask(__name__)
 
 @app.route('/data')
@@ -15,6 +16,7 @@ def data():
 @app.route('/daily')
 def daily():
     dataframes = fetch_all()  # Fetch the array of dataframes
+    
     last_rows = []
     for i, df in enumerate(dataframes):
         last_row = df.iloc[-1].to_dict()  # Extract the last row as a dictionary
@@ -29,8 +31,8 @@ def index():
 @app.route('/stock/<stock_name>')
 def stock_detail(stock_name):
     # You can fetch additional data about the stock here if needed
-    return render_template('stock_detail.html', stock_name=stock_name)
-
+    predicted_change = predict_change_for_specific_stock(stock_name)
+    return render_template('stock_detail.html', stock_name=stock_name, predicted_change=predicted_change)
 
 
 
