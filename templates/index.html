@@ -3,22 +3,42 @@
 <head>
     <title>OMX30</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .content-container {
+            display: flex; /* Enables Flexbox layout */
+            justify-content: space-between; /* Spaces the children evenly */
+        }
+        #stockInfo {
+            width: 30000px; /* Adjust width as needed */
+            /* Add any additional styling here */
+        }
+        table {
+            margin-top: -10px;
+        }
+        
+        
+    </style>
 </head>
 
 <body>
-    <div style="width:600px;">
-        <canvas id="stockChart"></canvas>
-    </div>
-    
-    <button id="1mo">1 Month</button>
-    <button id="3mo">3 Months</button>
-    <button id="6mo">6 Months</button>
-    <button id="1y">1 Year</button>
-
-    <div id="stockInfo">
-        <!-- The stock information will be displayed here -->
+    <div class="content-container">
+        <div class="chart-container">
+            <div style="width:600px;">
+                <canvas id="stockChart"></canvas>
+            </div>
+            
+            <div class="button-container">
+                <button id="1mo">1 Month</button>
+                <button id="3mo">3 Months</button>
+                <button id="6mo">6 Months</button>
+                <button id="1y">1 Year</button>
+            </div>
+        </div>
+        <div id="stockInfo">
+            <!-- The stock information will be displayed here -->
+        </div>
     </div>
     <script src="../static/script.js"></script>
-
 </body>
 </html>

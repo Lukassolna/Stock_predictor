@@ -1,0 +1,46 @@
+button {
+    background: rgb(177, 205, 186);
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    color: rgb(4, 79, 20); /* Text color */
+    padding: 5px 20px; /* Top/bottom and left/right padding */
+    margin: 5px; /* Space between buttons */
+    font-size: 16px; /* Text size */
+    font-weight: bold; /* Text weight */
+    text-transform: uppercase; /* Uppercase text */
+    cursor: pointer; /* Hand cursor on hover */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for background and shadow */
+}
+
+
+button:hover {
+    background: rgb(76, 74, 74);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect on hover */
+}
+
+#homebutton {
+    background-color: #4CAF50; /* Different background for the home button */
+}
+
+.positive { color: green;
+    font-size: 50px;
+    padding-left: 20px;
+    font-size: 30px; /* Adjust the font size as needed */
+ }
+.negative { color: red;
+    padding-left: 20px;
+    font-size: 30px; /* Adjust the font size as needed */
+    }
+.button-container {
+    
+    padding: 20px; /* Space around the buttons */
+}
+.AItext{
+    color: #333; /* Dark grey for main text */
+    font-size: 23px;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+

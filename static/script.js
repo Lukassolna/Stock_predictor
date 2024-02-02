@@ -91,26 +91,25 @@ function fetchDaily() {
         const stockInfoContainer = document.getElementById('stockInfo');
 
         const html = `
-            <div class="header">
-                <h1>Overview of OMX30 Stocks</h1>
-                <h2>Date: ${date}</h2>
-            </div>
-            <table>
-                <tr>
-                    <th>AI ranking</th>
-                    <th>Stock</th>
-                    <th>Daily Change</th>
+        <div class="header">
+            <h1 style="margin-top: -15px;">Overview of OMX30 ${date}</h1>
+        </div>
+        <table>
+            <tr>
+                <th></th>
+                <th>Stock</th>
+                <th>Daily Change</th>
+            </tr>
+            ${changes.map(stock => `
+                <tr onClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})">
+                    <td>${stock.rank}</td>
+                    <td>${stock.name}</td>
+                    <td class="${parseFloat(stock.Change) > 0 ? 'positive' : 'negative'}">${stock.Change}</td>
+                    <td><button onClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})">Click for AI prediction</button></td>
                 </tr>
-                ${changes.map(stock => `
-                    <tr  onClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})" >
-                        <td>${stock.rank}</td>
-                        <td>${stock.name}</td>
-                        <td>${stock.Change}</td>
-                        <td><button onClick="clickedStock('${stock.name}', ${stock.RSI}, '${stock.Change}', ${stock['10_change']}, ${stock.percentage_diff})">Click for AI prediction</button></td>
-                        </tr>
-                `).join('')}
-            </table>
-        `;
+            `).join('')}
+        </table>
+    `;
 
        
         stockInfoContainer.innerHTML = html;

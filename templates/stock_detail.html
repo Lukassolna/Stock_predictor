@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+    
     <title>Stock Details</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .positive { color: green; }
-        .negative { color: red; }
-    </style>
-    <button id='homebutton'>Back to Home</button>
+    <link rel="stylesheet" href="/static/styles.css">
+    <button  id='homebutton'>Back to Home</button>
 </head>
 <body>
     <h1>Stock Details: {{ stock_name }}</h1>
     <input type="hidden" id="stockName" value="{{ stock_name }}"> 
     
    
-    <p>AI predicted Change for the Next Day: <span id="predictedChange">{{ predicted_change }}%</span></p>
+    <p class="AItext">AI predicted Change for the Next Day: <span class="predicted-change" id="predictedChange">{{ predicted_change }}%</span></p>
 
     <div style="width:600px;">
         <canvas id="stockChart"></canvas>
     </div>
     
-    <button id="1mo">1 Month</button>
-    <button id="3mo">3 Months</button>
-    <button id="6mo">6 Months</button>
-    <button id="1y">1 Year</button>
-
+    <div class="button-container">
+        <button id="1mo">1 Month</button>
+        <button id="3mo">3 Months</button>
+        <button id="6mo">6 Months</button>
+        <button id="1y">1 Year</button>
+    </div>
     <script src="/static/stock_specific.js"></script>
 </body>
 </html>
