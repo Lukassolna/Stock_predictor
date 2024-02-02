@@ -33,6 +33,16 @@ function updateChart(data) {
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     });
     const values = data.map(item => item.Close);
+
+    // Calculate dynamic min and max for the dataset
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
+    
+    // Optionally, add a buffer or margin to min and max values for better chart visualization
+    const buffer = (maxValue - minValue) * 0.1; // Adding 10% buffer on each side
+    const dynamicMin = minValue - buffer;
+    const dynamicMax = maxValue + buffer;
+
     const ctx = document.getElementById('stockChart').getContext('2d');
     if (stockchart) {
         stockchart.destroy(); // Destroy the old chart instance if it exists
@@ -54,14 +64,13 @@ function updateChart(data) {
             scales: {
                 y: {
                     beginAtZero: false,
-                    min: 0,
-                    max: 3000,
+                    min: dynamicMin,
+                    max: dynamicMax,
                 }
             }
         }
     });
 }
-
 
 // Rest of your code remains the same
 
