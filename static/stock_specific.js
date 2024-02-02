@@ -1,13 +1,11 @@
 let stockchart; // Declare chart variable outside to be accessible in updateChart function
 let stockName = document.getElementById('stockName').value;
-
-
 document.getElementById('1mo').addEventListener('click', () => fetchData(stockName, '1mo'));
 document.getElementById('3mo').addEventListener('click', () => fetchData(stockName, '3mo'));
 document.getElementById('6mo').addEventListener('click', () => fetchData(stockName, '6mo'));
 document.getElementById('1y').addEventListener('click', () => fetchData(stockName, '1y'));
 
-
+document.getElementById('homebutton').addEventListener('click', () => window.location.href='/');
 
 function fetchData(stockName, period) {
    
@@ -19,7 +17,7 @@ function fetchData(stockName, period) {
         return response.json();
     })
     .then(data => {
-        updateChart(data);
+        updateChart(data,stockName);
     })
     .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
@@ -27,13 +25,13 @@ function fetchData(stockName, period) {
     });
 }
 
-function updateChart(data) {
+function updateChart(data,stockName) {
     const dates = data.map(item => {
         const date = new Date(item.Date);
         return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     });
-    const values = data.map(item => item.Close);
-
+    const values = data.map(item => item.Close);    
+    
     // Calculate dynamic min and max for the dataset
     const minValue = Math.min(...values);
     const maxValue = Math.max(...values);
@@ -47,13 +45,13 @@ function updateChart(data) {
     if (stockchart) {
         stockchart.destroy(); // Destroy the old chart instance if it exists
     }
-
+    
     stockchart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: dates,
             datasets: [{
-                label: 'OMX 30 Index',
+                label: stockName,
                 backgroundColor: 'rgba(0, 128, 0, 0.2)',
                 borderColor: 'rgba(0, 128, 0, 1)',
                 data: values,

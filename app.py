@@ -40,8 +40,9 @@ def index():
 
 @app.route('/stock/<stock_name>')
 def stock_detail(stock_name):
-    # You can fetch additional data about the stock here if needed
     predicted_change = predict_change_for_specific_stock(stock_name)
+    # Multiply by 100 and format to two decimal places as a percentage
+    predicted_change = f"{predicted_change * 100:.2f} %"
     return render_template('stock_detail.html', stock_name=stock_name, predicted_change=predicted_change)
 
 
