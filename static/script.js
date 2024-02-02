@@ -1,4 +1,4 @@
-let chart; // Declare chart variable outside to be accessible in updateChart function
+let chart;
 
 document.getElementById('1mo').addEventListener('click', () => fetchData('1mo'));
 document.getElementById('3mo').addEventListener('click', () => fetchData('3mo'));
@@ -21,7 +21,7 @@ function updateChart(data) {
     const values = data.map(item => item.Close);
     const ctx = document.getElementById('stockChart').getContext('2d');
     if (chart) {
-        chart.destroy(); // Destroy the old chart instance if it exists
+        chart.destroy(); // Destroy the old chart instance if there exists one
     }
 
     chart = new Chart(ctx, {
@@ -83,15 +83,13 @@ function fetchDaily() {
         // Sort the changes array
         changes.sort((a, b) => parseFloat(b.Change.replace('%', '')) - parseFloat(a.Change.replace('%', '')));
 
-        // Assign ranks
+        // Assign ranks, 
         changes.forEach((stock, index) => {
             stock.rank = index + 1;
         });
 
-        // Get the container element
         const stockInfoContainer = document.getElementById('stockInfo');
 
-        // Create HTML content
         const html = `
             <div class="header">
                 <h1>Overview of OMX30 Stocks</h1>
@@ -114,13 +112,13 @@ function fetchDaily() {
             </table>
         `;
 
-        // Set the HTML content
+       
         stockInfoContainer.innerHTML = html;
     });
 }
 
-// Rest of your code remains the same
 
-// Initial chart load for default period
+
+// Initial chart state
 fetchData('10mo');
 fetchDaily();

@@ -10,19 +10,19 @@ def sql_to_pandas(ticker,password):
     conn = psycopg2.connect(
         dbname="PROJECT",
         user="postgres",
-        password=password,  # Use the renamed variable here
+        password=password,  
         host="localhost",
         port="5432"
     )
-    # Create a cursor object
+    
     cur = conn.cursor()
-    # Execute a query to select all rows from the 'SEB' table
+    
     cur.execute(f"SELECT * FROM {ticker} ;")
     # Fetch all rows
     rows = cur.fetchall()
     # Define column names
     column_names = ["date", "close", "Change", "Up", "Down", "Av up", "Av down", "Relative", "RSI"]
-    # Create a DataFrame
+    
     df = pd.DataFrame(rows, columns=column_names)
     # Close the cursor and connection
     cur.close()
@@ -30,7 +30,7 @@ def sql_to_pandas(ticker,password):
     return df
 
 def csv_to_sql(ticker, csv_file_path, password):
-    # Read the CSV file into a DataFrame
+   
     df = pd.read_csv(csv_file_path)
     print(df)
     # Establish a connection to the database
@@ -43,7 +43,6 @@ def csv_to_sql(ticker, csv_file_path, password):
     )
     cur = conn.cursor()
 
-    # Replace periods in ticker with underscores
     ticker_table_name = ticker.replace('.', '_').replace('-', '_')
 
     # Create the table
@@ -66,7 +65,7 @@ def csv_to_sql(ticker, csv_file_path, password):
     """)
     conn.commit()
 
-    # Insert data into the table
+# Insert data into the table
   # Insert data into the table
     for _, row in df.iterrows():
         cur.execute(f"""

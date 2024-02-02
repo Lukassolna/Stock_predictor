@@ -30,18 +30,21 @@ def predict_change_for_specific_stock(stock):
     train_sequences, train_targets = create_sequences(train_data, sequence_length)
     test_sequences, test_targets = create_sequences(test_data, sequence_length)
 
-    # Generate a stock-specific model path
+    # Generate a stock specific model path
     model_path = f'saved_models/model_{stock}.pth'
 
-    # Check if a model for the specific stock already exists
+    # Check if a model for the specific stock already exists, in that case we do not need to train it
+    # but rather just reuse it
     if os.path.exists(model_path):
-        # Load the model
+        
         model = RNNModel(input_size=3, hidden_size=1000, num_layers=3, output_size=1)
         model.load_state_dict(torch.load(model_path))
-        model.eval()  # Make sure to set the model to evaluation mode
+        model.eval() 
         print(f"Model for {stock} loaded.")
     else:
-        # If the model doesn't exist, proceed with training a new one
+        # If the model doesn't exist, proceed with training a new one with specific input parameters. 
+        # A lot of testing was done here, and it is difficult to decide on what to use with regards to overfitting and
+        # hardware limitations
         model = RNNModel(input_size=3, hidden_size=1000, num_layers=3, output_size=1)
         criterion = nn.MSELoss()
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
@@ -68,6 +71,6 @@ def predict_change_for_specific_stock(stock):
         with torch.no_grad():
             predicted_change = model(last_sequence_tensor).item()
         return predicted_change
-
+    # predicted_change is for the next day
     predicted_change = predict_next_change(model, df, sequence_length)
     return predicted_change

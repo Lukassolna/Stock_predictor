@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch
 
-
+# class for our main RNNModel that is used in our ML
 class RNNModel(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, output_size):
         super(RNNModel, self).__init__()

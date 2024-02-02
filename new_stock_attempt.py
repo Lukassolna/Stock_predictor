@@ -47,14 +47,14 @@ def verify(dataframes):
 
 
 def change_column(df):
-    # Create 'next_day_change' column by shifting 'Change' up by one
+    
     df['next_day_change'] = df['Change'].shift(-1)
-    # Fill the last row's 'next_day_change' with 0
+    
     df['next_day_change']=df['next_day_change'].fillna(0)
     return df
 
 def add_sma_10(df, column_name):
-    # Calculate the 10-day Simple Moving Average (SMA) for the specified column
+   
     sma_column_name = f'SMA_10_{column_name}'
     df[sma_column_name] = df[column_name].rolling(window=10, min_periods=1).mean()
     return df
@@ -89,6 +89,8 @@ def create_columns(df):
     df.fillna(0, inplace=True)
     return df
 
+
+# pickle is just to avoid fetching the same data over and over again which is very time consuming
 def fetch_all(use_pickle=True, pickle_path='stock_data.pkl', max_age_hours=1):
     if use_pickle and os.path.exists(pickle_path):
         file_age_hours = (datetime.now() - datetime.fromtimestamp(os.path.getmtime(pickle_path))).total_seconds() / 3600

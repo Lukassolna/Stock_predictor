@@ -1,4 +1,4 @@
-let stockchart; // Declare chart variable outside to be accessible in updateChart function
+let stockchart; 
 let stockName = document.getElementById('stockName').value;
 document.getElementById('1mo').addEventListener('click', () => fetchData(stockName, '1mo'));
 document.getElementById('3mo').addEventListener('click', () => fetchData(stockName, '3mo'));
@@ -36,7 +36,7 @@ function fetchData(stockName, period) {
     })
     .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
-        // Optionally, update the UI to inform the user
+        
     });
 }
 
@@ -47,11 +47,11 @@ function updateChart(data,stockName) {
     });
     const values = data.map(item => item.Close);    
     
-    // Calculate dynamic min and max for the dataset
+    
     const minValue = Math.min(...values);
     const maxValue = Math.max(...values);
     
-    // Optionally, add a buffer or margin to min and max values for better chart visualization
+
     const buffer = (maxValue - minValue) * 0.1; // Adding 10% buffer on each side
     const dynamicMin = minValue - buffer;
     const dynamicMax = maxValue + buffer;
@@ -84,8 +84,5 @@ function updateChart(data,stockName) {
         }
     });
 }
-
-// Rest of your code remains the same
-
-// Initial chart load for default period
+//initial chart state
 fetchData(stockName,'10mo');
