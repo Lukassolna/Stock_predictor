@@ -1,10 +1,4 @@
 # Project Title: AI-Powered Stock Predictor
-
-## Disclaimer
-this is solely a for fun project and stocks were chosen mainly in order have 
-access to large datasets for our training data.
-The information provided in this application is for educational and informational purposes only 
-and should not be construed as financial advice.
 ## Description
 This project is an AI-powered stock prediction web application. It uses machine learning models to forecast stock prices,
 employing Python for data analysis and machine learning,
@@ -22,6 +16,10 @@ JavaScript, Flask, HTML, and CSS is used to create a simple lightweight web inte
 - **Flask**: A lightweight web framework for Python.
 - **HTML & CSS**: For structuring and styling the web pages.
 
-  
  Each stock is evaluted based on a model developed with a recurrant neural network whih utilizes past performance to predict next day performance.
  
+## Disclaimer
+this is solely a for fun project and stocks were chosen mainly in order have 
+access to large datasets for our training data.
+The information provided in this application is for educational and informational purposes only 
+and should not be construed as financial advice.
