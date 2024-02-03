@@ -6,6 +6,7 @@ from new_stock_attempt import dfs
 from global_var import omx
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
+from sklearn.metrics import mean_squared_error
 
 
 
@@ -27,8 +28,8 @@ def create_sequences(data, sequence_length):
 
 
 
-train_data = combined_data[:int(len(combined_data) * 0.7)]
-test_data = combined_data[-30:]
+train_data = combined_data[:int(len(combined_data) * 0.9)]
+test_data = combined_data[int(len(combined_data) * 0.9):]
 
 sequence_length = 4  
 
@@ -43,7 +44,7 @@ criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 # Training loop
-num_epochs = 20  
+num_epochs = 20 
 for epoch in range(num_epochs):
     model.train()
     optimizer.zero_grad()
@@ -72,33 +73,25 @@ predicted_change = predict_next_change(model, df, sequence_length)
 print(f"Predicted Change for the next day: {predicted_change}") 
 def test():
     model.eval()
-    test_losses = []
     actuals = []
     predictions = []
-
     with torch.no_grad():
         for i in range(len(test_sequences)):
             input_seq = test_sequences[i].unsqueeze(0)  # No need for unsqueeze(-1)
             target = test_targets[i]
             output = model(input_seq)
-            loss = criterion(output, target.view(-1, 1))  # Reshape target to match output
-            test_losses.append(loss.item())
             actuals.append(target.item())
             predictions.append(output.item())
 
-   
+    mse = mean_squared_error(actuals, predictions)  # Calculate MSE
 
-    average_test_loss = sum(test_losses) / len(test_losses)
-    print(f'Average Test Loss: {average_test_loss:.4f}')
-    print(actuals)
-    print(predictions)
     # Plot function to visualize results vs predictions
     def plot():
         plt.ion()  
         plt.figure(figsize=(12, 6))
         plt.plot(actuals, label='Actual')
         plt.plot(predictions, label='Predicted')
-        plt.title('Test Actual vs Test Predicted')
+        plt.title(f'Test Actual vs Test Predicted - MSE: {mse:.4f}')  # Show MSE in the title
         plt.xlabel('Sample')
         plt.ylabel('Value')
         plt.legend()
