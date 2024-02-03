@@ -27,8 +27,8 @@ def create_sequences(data, sequence_length):
 
 
 
-train_data = combined_data[:int(len(combined_data) * 0.98)]
-test_data = combined_data[int(len(combined_data) * 0.98):]
+train_data = combined_data[:int(len(combined_data) * 0.7)]
+test_data = combined_data[-30:]
 
 sequence_length = 4  
 
@@ -90,7 +90,8 @@ def test():
 
     average_test_loss = sum(test_losses) / len(test_losses)
     print(f'Average Test Loss: {average_test_loss:.4f}')
-
+    print(actuals)
+    print(predictions)
     # Plot function to visualize results vs predictions
     def plot():
         plt.ion()  
