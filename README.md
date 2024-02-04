@@ -1,5 +1,13 @@
 # Project Title: AI-Powered Stock Predictor
 
+## Table of Contents
+- [Description](#description)
+- [Technologies Used](#technologies-used)
+- [Features](#features)
+- [Setup and Installation](#setup-and-installation)
+- [Running the Application](#running-the-application)
+- [Disclaimer](#disclaimer)
+- [License](#license)
 ## Description
 This project is an AI-powered stock prediction web application. It uses machine learning models to forecast stock prices, employing Python for data analysis and machine learning, SQL for data storage, and JavaScript, Flask, HTML, and CSS to create a simple lightweight web interface.
 
