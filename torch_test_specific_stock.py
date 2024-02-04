@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
 from torch_RNNmodel import RNNModel  # Assuming this is your custom module
+from torch_LSTMmodel import LSTMModel  # Assuming this is your custom module
 from new_stock_attempt import dfs
 from global_var import omx
 from sklearn.preprocessing import MinMaxScaler
@@ -13,7 +14,7 @@ from sklearn.metrics import mean_squared_error
 combined_data = []
 index = omx.index('HM-B.ST')
 df=dfs[index]
-combined_data.extend(zip(df['Change'].tolist(), df['RSI'].tolist(),df['10_change'].tolist()))
+combined_data.extend(zip(df['Change'].tolist(), df['RSI'].tolist(),df['10_change'].tolist(),df['percentage_diff'].tolist()))
 scaler = MinMaxScaler()
 #combined_data = scaler.fit_transform(combined_data)
 def create_sequences(data, sequence_length):
@@ -28,10 +29,10 @@ def create_sequences(data, sequence_length):
 
 
 
-train_data = combined_data[:int(len(combined_data) * 0.9)]
-test_data = combined_data[int(len(combined_data) * 0.9):]
+train_data = combined_data[:int(len(combined_data) * 0.95)]
+test_data = combined_data[int(len(combined_data) * 0.95):]
 
-sequence_length = 4  
+sequence_length = 10
 
 
 
@@ -39,9 +40,9 @@ train_sequences, train_targets = create_sequences(train_data, sequence_length)
 test_sequences, test_targets = create_sequences(test_data, sequence_length)
 
 
-model = RNNModel(input_size=3, hidden_size=1000, num_layers=3, output_size=1)
+model = LSTMModel(input_size=4, hidden_size=1000, num_layers=2, output_size=1)
 criterion = nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.0005)
 
 # Training loop
 num_epochs = 20 
@@ -57,7 +58,7 @@ for epoch in range(num_epochs):
 
 def predict_next_change(model, df, sequence_length):
     
-    data = list(zip(df['Change'].tolist(), df['RSI'].tolist(), df['10_change'].tolist()))
+    data = list(zip(df['Change'].tolist(), df['RSI'].tolist(), df['10_change'].tolist(),df['percentage_diff'].tolist()))
     # Get the last elements
     last_sequence = data[-sequence_length:]
     # Convert to tensor
@@ -82,8 +83,18 @@ def test():
             output = model(input_seq)
             actuals.append(target.item())
             predictions.append(output.item())
+        # Assuming 'actuals' is your array of actual values
+    mean_actuals = np.mean(actuals)
 
+    # Create an array filled with the mean value, same length as 'actuals'
+    mean_actuals_array = np.full_like(actuals, mean_actuals)
+
+    # Now calculate the mean squared error
+    mean_mse = mean_squared_error(actuals, mean_actuals_array)
+
+    print(mean_mse)
     mse = mean_squared_error(actuals, predictions)  # Calculate MSE
+    print(mse)
 
     # Plot function to visualize results vs predictions
     def plot():
@@ -91,7 +102,7 @@ def test():
         plt.figure(figsize=(12, 6))
         plt.plot(actuals, label='Actual')
         plt.plot(predictions, label='Predicted')
-        plt.title(f'Test Actual vs Test Predicted - MSE: {mse:.4f}')  # Show MSE in the title
+        plt.title(f'Test Actual vs Test Predicted - MSE: {mse:.4f}, Mean MSE: {mean_mse:.4f}')
         plt.xlabel('Sample')
         plt.ylabel('Value')
         plt.legend()
