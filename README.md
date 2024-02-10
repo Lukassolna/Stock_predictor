@@ -30,7 +30,7 @@ Follow these steps to set up the AI-Powered Stock Predictor application on your 
      ```
    git clone https://github.com/Lukassolna/PROJECT
    cd PROJECT
-       ```
+     ```
 3. 2. **Set Up a Virtual Environment**
 - For Windows:
   ```
