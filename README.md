@@ -7,7 +7,7 @@
 - [Running the Application](#running-the-application)
 - [Disclaimer](#disclaimer)
 ## Description
-This project is an AI-powered stock prediction web application. It uses machine learning models to forecast stock prices, using Python for data analysis and machine learning, SQL for data storage, and JavaScript, Flask, HTML, and CSS to create a simple lightweight web interface.
+This project is an AI-powered stock prediction web application. It uses machine learning models to forecast stock prices, utilizing Python for data analysis and machine learning, SQL for data storage, and JavaScript, Flask, HTML, and CSS to create a simple lightweight web interface.
 
 ## Technologies Used
 - **Python**: For AI model development and backend logic. Some of the main libraries used are:
