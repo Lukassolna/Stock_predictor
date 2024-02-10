@@ -56,8 +56,9 @@ python app.py
 
 3. **Access the Web Interface**
 - Open a web browser and navigate to
--  ``` `http://127.0.0.1:5000/`
--   ```
+   ```
+  http://127.0.0.1:5000/
+    ```
 
 
 ## Disclaimer
