@@ -23,5 +23,42 @@ This project is an AI-powered stock prediction web application. It uses machine 
 
 Each stock is evaluated based on a model developed with a recurrent neural network which utilizes past performance to predict next day performance.
 
+## Setup and Installation
+Follow these steps to set up the AI-Powered Stock Predictor application on your local machine:
+
+1. **Clone the Repository**
+2. 2. **Set Up a Virtual Environment**
+- For Windows:
+  ```
+  python -m venv venv
+  .\venv\Scripts\activate
+  ```
+- For macOS and Linux:
+  ```
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+  
+
+3. **Install Dependencies**
+pip install -r requirements.txt
+
+4. **Environment Variables**
+Set up the necessary environment variables or use a `.env` file for configurations like database URI, secret keys, etc.
+
+5. **Initialize Database (Optional)**
+- Run the SQL scripts provided in the `sql` directory to set up your database schema.
+- Ensure your database connection details are correctly set up in your application's configuration.
+
+## Running the Application
+To run the AI-Powered Stock Predictor:
+
+1. **Start the Flask Application**
+python app.py
+
+3. **Access the Web Interface**
+- Open a web browser and navigate to `http://127.0.0.1:5000/`
+
+
 ## Disclaimer
 This is solely a for-fun project, and stocks were chosen mainly to have access to large datasets for our training data. The information provided in this application is for educational and informational purposes only and should not be construed as financial advice.
