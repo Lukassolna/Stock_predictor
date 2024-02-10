@@ -27,7 +27,9 @@ Each stock is evaluated based on a model developed with a recurrent neural netwo
 Follow these steps to set up the AI-Powered Stock Predictor application on your local machine:
 
 1. **Clone the Repository**
-2. 2. **Set Up a Virtual Environment**
+   git clone https://github.com/Lukassolna/PROJECT
+   cd PROJECT
+3. 2. **Set Up a Virtual Environment**
 - For Windows:
   ```
   python -m venv venv
