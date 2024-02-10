@@ -44,17 +44,20 @@ Follow these steps to set up the AI-Powered Stock Predictor application on your 
 
 3. **Install Dependencies**
      ```
-pip install -r requirements.txt
-   ```
+     pip install -r requirements.txt
+     ```
 
 ## Running the Application
-To run the AI-Powered Stock Predictor:
 
+  ```
 1. **Start the Flask Application**
 python app.py
+ ```
 
 3. **Access the Web Interface**
-- Open a web browser and navigate to `http://127.0.0.1:5000/`
+- Open a web browser and navigate to
+-  ``` `http://127.0.0.1:5000/`
+-   ```
 
 
 ## Disclaimer
