@@ -43,14 +43,9 @@ Follow these steps to set up the AI-Powered Stock Predictor application on your 
   
 
 3. **Install Dependencies**
+     ```
 pip install -r requirements.txt
-
-4. **Environment Variables**
-Set up the necessary environment variables or use a `.env` file for configurations like database URI, secret keys, etc.
-
-5. **Initialize Database (Optional)**
-- Run the SQL scripts provided in the `sql` directory to set up your database schema.
-- Ensure your database connection details are correctly set up in your application's configuration.
+   ```
 
 ## Running the Application
 To run the AI-Powered Stock Predictor:
