@@ -3,7 +3,6 @@
 ## Table of Contents
 - [Description](#description)
 - [Technologies Used](#technologies-used)
-- [Features](#features)
 - [Setup and Installation](#setup-and-installation)
 - [Running the Application](#running-the-application)
 - [Disclaimer](#disclaimer)
