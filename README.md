@@ -50,7 +50,7 @@ Follow these steps to set up the AI-Powered Stock Predictor application on your 
 ## Running the Application
 
   ```
-1. **Start the Flask Application**
+
 python app.py
  ```
 
