@@ -11,9 +11,10 @@ This project is an AI-powered stock prediction web application. It uses machine 
 
 ## Technologies Used
 - **Python**: For AI model development and backend logic. Some of the main libraries used are:
+-  - **sklearn, Pytorch**: Machine learning and optimization.
   - **psycopg2**: For interaction with our PostgreSQL database.
   - **pandas, numpy**: Standard data processing and data manipulation.
-  - **sklearn, Pytorch**: Machine learning and optimization.
+ 
 - **Yahoo finance API**: To retrieve stock data.
 - **SQL**: To store stock data in a secure way with fast access to be used for training our model (Mostly just to familiarize with SQL and transactions).
 - **JavaScript**: To add interactivity to the web pages.
