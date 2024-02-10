@@ -48,9 +48,9 @@ Follow these steps to set up the AI-Powered Stock Predictor application on your 
      ```
 
 ## Running the Application
-      ```
+   ```
       python app.py
-     ```
+   ```
 
 3. **Access the Web Interface**
 - Open a web browser and navigate to
