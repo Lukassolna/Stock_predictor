@@ -7,7 +7,6 @@
 - [Setup and Installation](#setup-and-installation)
 - [Running the Application](#running-the-application)
 - [Disclaimer](#disclaimer)
-- [License](#license)
 ## Description
 This project is an AI-powered stock prediction web application. It uses machine learning models to forecast stock prices, employing Python for data analysis and machine learning, SQL for data storage, and JavaScript, Flask, HTML, and CSS to create a simple lightweight web interface.
 
