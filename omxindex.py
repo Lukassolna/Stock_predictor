@@ -3,7 +3,7 @@ import pandas as pd
 
 # fetch data for omx with 10 months as default period
 def fetch_omx_hist(period="10mo"):
-    # Fetch data 
+
     omx30 = yf.Ticker("^OMX")
 
     
